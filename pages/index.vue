@@ -23,17 +23,17 @@ export default Vue.extend({
     items: [
       new Item({
         id: 1,
-        name: "task1",
+        name: 'task1',
         done: false,
       }),
       new Item({
         id: 2,
-        name: "task2",
+        name: 'task2',
         done: true,
       }),
       new Item({
         id: 3,
-        name: "task3",
+        name: 'task3',
         done: false,
       }),
     ],
@@ -41,17 +41,19 @@ export default Vue.extend({
   }),
   methods: {
     addItem(itemName: string) {
-      this.items.push(new Item({
-        id: this.newItemId++,
-        name: itemName,
-        done: false,
-      }))
+      this.items.push(
+        new Item({
+          id: this.newItemId++,
+          name: itemName,
+          done: false,
+        })
+      )
     },
     changeDone(id: number) {
-      //will access to database
+      // will access to database
     },
     deleteItem(id: number) {
-      this.items = this.items.filter((item) => item.id != id)
+      this.items = this.items.filter((item) => item.id !== id)
     },
     deleteDone() {
       this.items = this.items.filter((item) => !item.done)
