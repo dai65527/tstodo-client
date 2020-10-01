@@ -19,44 +19,33 @@ export default Vue.extend({
   components: {
     List,
   },
-  data: () => ({
-    items: [
-      new Item({
-        id: 1,
-        name: 'task1',
-        done: false,
-      }),
-      new Item({
-        id: 2,
-        name: 'task2',
-        done: true,
-      }),
-      new Item({
-        id: 3,
-        name: 'task3',
-        done: false,
-      }),
-    ],
-    newItemId: 4,
+  data: (): { items: Item[] } => ({
+    items: [],
   }),
+  async created() {
+    await this.getItems()
+  },
   methods: {
-    addItem(itemName: string) {
-      this.items.push(
-        new Item({
-          id: this.newItemId++,
-          name: itemName,
-          done: false,
-        })
-      )
+    async getItems() {
+      const res = await this.$axios.get('http://localhost:4000/items/')
+      this.items = res.data
     },
-    changeDone(id: number) {
-      // will access to database
+    async addItem(itemName: string) {
+      await this.$axios.post(`http://localhost:4000/items/`, {
+        name: itemName,
+      })
+      await this.getItems()
     },
-    deleteItem(id: number) {
-      this.items = this.items.filter((item) => item.id !== id)
+    async changeDone(id: number) {
+      await this.$axios.put(`http://localhost:4000/items/done/${id}/`)
     },
-    deleteDone() {
-      this.items = this.items.filter((item) => !item.done)
+    async deleteItem(id: number) {
+      await this.$axios.delete(`http://localhost:4000/items/${id}/`)
+      await this.getItems()
+    },
+    async deleteDone() {
+      await this.$axios.delete(`http://localhost:4000/items/`)
+      await this.getItems()
     },
   },
 })
