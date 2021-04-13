@@ -18,6 +18,7 @@
           :item="item"
           @delete-item="deleteItem"
           @change-done="changeDone"
+          @change-undone="changeUnDone"
         />
       </div>
     </v-card>
@@ -50,6 +51,9 @@ export default Vue.extend({
     },
     changeDone(id: number) {
       this.$emit('change-done', id)
+    },
+    changeUnDone(id: number) {
+      this.$emit('change-undone', id)
     },
     deleteItem(id: number) {
       this.$emit('delete-item', id)

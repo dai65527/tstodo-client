@@ -24,7 +24,11 @@ export default Vue.extend({
   },
   methods: {
     changeDone() {
-      this.$emit('change-done', this.item.id)
+      if (this.item.done === false) {
+        this.$emit('change-undone', this.item.id)
+      } else {
+        this.$emit('change-done', this.item.id)
+      }
     },
     deleteItem() {
       this.$emit('delete-item', this.item.id)

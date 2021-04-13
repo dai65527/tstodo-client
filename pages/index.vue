@@ -4,6 +4,7 @@
       :items="items"
       @add-item="addItem"
       @change-done="changeDone"
+      @change-undone="changeUnDone"
       @delete-item="deleteItem"
       @delete-done="deleteDone"
     />
@@ -37,7 +38,12 @@ export default Vue.extend({
       await this.getItems()
     },
     async changeDone(id: number) {
-      await this.$axios.put(`http://localhost:4000/items/done/${id}/`)
+      await this.$axios.put(`http://localhost:4000/done/${id}/`)
+      await this.getItems()
+    },
+    async changeUnDone(id: number) {
+      await this.$axios.delete(`http://localhost:4000/done/${id}/`)
+      await this.getItems()
     },
     async deleteItem(id: number) {
       await this.$axios.delete(`http://localhost:4000/items/${id}/`)
