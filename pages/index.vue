@@ -28,29 +28,29 @@ export default Vue.extend({
   },
   methods: {
     async getItems() {
-      const res = await this.$axios.get('http://localhost:4000/items/')
+      const res = await this.$axios.get('http://localhost:4000/items')
       this.items = res.data
     },
     async addItem(itemName: string) {
-      await this.$axios.post(`http://localhost:4000/items/`, {
+      await this.$axios.post(`http://localhost:4000/items`, {
         name: itemName,
       })
       await this.getItems()
     },
     async changeDone(id: number) {
-      await this.$axios.put(`http://localhost:4000/done/${id}/`)
+      await this.$axios.put(`http://localhost:4000/items/${id}/done`)
       await this.getItems()
     },
     async changeUnDone(id: number) {
-      await this.$axios.delete(`http://localhost:4000/done/${id}/`)
+      await this.$axios.delete(`http://localhost:4000/items/${id}/done`)
       await this.getItems()
     },
     async deleteItem(id: number) {
-      await this.$axios.delete(`http://localhost:4000/items/${id}/`)
+      await this.$axios.delete(`http://localhost:4000/items/${id}`)
       await this.getItems()
     },
     async deleteDone() {
-      await this.$axios.delete(`http://localhost:4000/items/`)
+      await this.$axios.delete(`http://localhost:4000/items`)
       await this.getItems()
     },
   },
